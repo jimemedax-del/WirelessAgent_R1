@@ -469,7 +469,7 @@ def generate_concise_report(current_state, new_user_id=None, adjustment_result=N
         
         if new_user:
             report.append("\nNew User Allocation:")
-            report.append(f"User {new_user_id} → {new_user_slice} Slice")
+            report.append(f"User {new_user_id} -> {new_user_slice} Slice")
             report.append(f"CQI: {new_user['cqi']}, Bandwidth: {new_user['bandwidth']} MHz, Rate: {new_user['rate']:.2f} Mbps, Latency: {new_user['latency']} ms")
     
     # If dynamic adjustments were made, summarize them
@@ -481,7 +481,7 @@ def generate_concise_report(current_state, new_user_id=None, adjustment_result=N
         if len(adjustment_result['user_adjustments']) > 0:
             adj_summary = []
             for adj in adjustment_result["user_adjustments"]:
-                adj_summary.append(f"User {adj['user_id']}: {adj['old_bandwidth']}→{adj['new_bandwidth']} MHz, Rate: {adj['old_rate']:.2f}→{adj['new_rate']:.2f} Mbps")
+                adj_summary.append(f"User {adj['user_id']}: {adj['old_bandwidth']}->{adj['new_bandwidth']} MHz, Rate: {adj['old_rate']:.2f}->{adj['new_rate']:.2f} Mbps")
             report.append("  " + ", ".join(adj_summary))
     
     return "\n".join(report)
@@ -1667,7 +1667,7 @@ This means we cannot accommodate this user at this time.
         if adjustment_result["adjustments_made"]:
             adjustment_details = "\nAdjustment details:\n"
             for adj in adjustment_result["user_adjustments"]:
-                adjustment_details += f"- User {adj['user_id']}: {adj['old_bandwidth']} MHz → {adj['new_bandwidth']} MHz, Rate: {adj['old_rate']:.2f} Mbps → {adj['new_rate']:.2f} Mbps\n"
+                adjustment_details += f"- User {adj['user_id']}: {adj['old_bandwidth']} MHz -> {adj['new_bandwidth']} MHz, Rate: {adj['old_rate']:.2f} Mbps -> {adj['new_rate']:.2f} Mbps\n"
             adjustment_message += adjustment_details
     else:
         adjustment_message = "Sufficient slice capacity available. No adjustments needed."
@@ -1833,8 +1833,8 @@ Please provide a final summary explaining why this user couldn't be accommodated
         adjustment_summary += "User adjustments:\n"
         
         for adj in adjustment_result["user_adjustments"]:
-            adjustment_summary += f"- User {adj['user_id']}: {adj['old_bandwidth']} MHz → {adj['new_bandwidth']} MHz ({adj['bandwidth_reduction']} MHz reduction)\n"
-            adjustment_summary += f"  Rate: {adj['old_rate']:.2f} Mbps → {adj['new_rate']:.2f} Mbps (still meets requirements)\n"
+            adjustment_summary += f"- User {adj['user_id']}: {adj['old_bandwidth']} MHz -> {adj['new_bandwidth']} MHz ({adj['bandwidth_reduction']} MHz reduction)\n"
+            adjustment_summary += f"  Rate: {adj['old_rate']:.2f} Mbps -> {adj['new_rate']:.2f} Mbps (still meets requirements)\n"
     
     # Add intent understanding override info if applied
     intent_override_summary = ""
